@@ -1,4 +1,0 @@
-numpy == 1.20.1
-yfinance == 0.1.63
-streamlit == 0.89.0
-os

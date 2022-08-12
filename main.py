@@ -176,14 +176,3 @@ elif add_box == 'Financials':  # part for the financial sheets data
             '### Cash Flow Statement data in millions for the last three fiscal years')
         df = stock.cashflow.apply(lambda x: np.round(x / 1000000, 2))
         st.dataframe(df)
-
-elif add_box == 'Save the data':
-    if st.checkbox('Insert path'):
-        path = st.text_input('Insert the path for saving: ')
-    elif st.checkbox('Use current path'):
-        path = os.getcwd()
-        path = path.replace('\\', '/') + '/'
-    if st.button('Save data as .csv'):
-        data.to_csv(path + ticker + '_data.csv')
-    elif st.button('Save data as .xlsx'):
-        data.to_excel(path + ticker + '_data.xlsx')

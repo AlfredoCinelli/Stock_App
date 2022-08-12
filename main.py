@@ -28,7 +28,8 @@ def fetch_data(ticker: str, start_date: str, end_date: str) -> Tuple[DataFrame, 
 
     Returns:
         data: (DataFrame): data about the stock
-        info: 
+        info: (DataFrame): data about the stock
+        stock: (object): instance of the Ticker class
     """
     stock = yf.Ticker(ticker)
     data = stock.history(start=start_date, end=end_date, interval='1d')
@@ -44,7 +45,7 @@ add_box = st.sidebar.selectbox(
      'Time Series',
      'Key Values',
      'Financials',
-     'Save the data'))
+     ))
 
 ticker = st.text_input('Insert the ticker: ')
 start_date = st.text_input('Insert the starting date as yyyy-mm-dd: ')

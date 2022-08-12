@@ -4,19 +4,32 @@ import yfinance as yf
 import streamlit as st
 import numpy as np
 import os
+from typing import Tuple
+from pandas import DataFrame
 
 # %% Page layout
 
 st.write('# **STOCK DATA FETCH APP** :chart_with_upwards_trend:  :moneybag:')
 st.write(
     'The aim of this app is, after giving the ticker, to fetch the data from '
-    'yhaoo finance and doing some plot and summary ')
+    'yhaoo finance and doing some plots and summary ')
 
 # %% Fetching data function
 
 
 @st.cache
-def fetch_data(ticker, start_date, end_date):
+def fetch_data(ticker: str, start_date: str, end_date: str) -> Tuple[DataFrame, DataFrame, object]:
+    """Function to fetch the data according to the given Ticker
+
+    Args:
+        ticker (str): ticker of the stock to be fetched
+        start_date (str): date from which start to fetch the data
+        end_date (str): date from which ending the data fetching
+
+    Returns:
+        data: (DataFrame): data about the stock
+        info: 
+    """
     stock = yf.Ticker(ticker)
     data = stock.history(start=start_date, end=end_date, interval='1d')
     info = stock.info

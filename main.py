@@ -41,6 +41,14 @@ def fetch_data(
     return data, info, stock
 
 
+#%% Data conversion function
+
+
+def convert_df(df: DataFrame):
+
+    return df.to_csv(index=False).encode("utf-8")
+
+
 # %% Body of the web app
 
 
@@ -64,6 +72,16 @@ data, info, stock = fetch_data(ticker, start_date, end_date)  # get the data
 
 
 if add_box == "Time Series":  # part for the time series of variables
+
+    data_dwn = convert_df(data)  # convert the dataframe to a csv
+
+    st.download_button(
+        label="Download data",
+        data=data_dwn,
+        file_name=f"{ticker}_data.csv",
+        mime="text/csv",
+        key="download-csv",
+    )
 
     dim = st.selectbox(
         "Pick the financial measure needed", options=["-", "Price", "Return", "Volume"]
@@ -122,23 +140,25 @@ elif add_box == "Financials":  # part for the financial sheets data
     )
     if dc == "Balance Sheet":
         st.write("### Balance Sheet data in millions for the last four fiscal years")
-        df = stock.balancesheet.apply(lambda x: np.round(x / 1000000, 2))
-        df.columns = pd.to_datetime(df.columns).year
+        df = stock.balancesheet.apply(
+            lambda x: np.round(x / 1000000, 2)
+        )  # round in millions
+        df.columns = pd.to_datetime(df.columns).year  # convert the date to year unit
         st.dataframe(df)
     elif dc == "Income Statement":
-        st.write(
-            "### Income Statement data in millions for the last four fiscal years"
-        )
+        st.write("### Income Statement data in millions for the last four fiscal years")
         df = stock.financials.astype(float)
-        df = df.apply(lambda x: np.round(x / 1000000, 2))
-        df.columns = pd.to_datetime(df.columns).year
+        df = df.apply(lambda x: np.round(x / 1000000, 2))  # round in millions
+        df.columns = pd.to_datetime(df.columns).year  # convert the date to year unit
         st.dataframe(df)
     elif dc == "Cash Flow Statement":
         st.write(
             "### Cash Flow Statement data in millions for the last four fiscal years"
         )
-        df = stock.cashflow.apply(lambda x: np.round(x / 1000000, 2))
-        
+        df = stock.cashflow.apply(
+            lambda x: np.round(x / 1000000, 2)
+        )  # round in millions
+        df.columns = pd.to_datetime(df.columns).year  # convert the date to year unit
         st.dataframe(df)
 
 # %% Change general appearance

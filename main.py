@@ -43,8 +43,16 @@ def fetch_data(
 
 #%% Data conversion function
 
-
+@st.cache
 def convert_df(df: DataFrame):
+    """Converting data for download
+
+    Args:
+        df (DataFrame): dataframe about stock data
+
+    Returns:
+        [csv]: csv file from pandas dataframe
+    """
 
     return df.to_csv().encode("utf-8")
 

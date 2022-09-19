@@ -46,7 +46,7 @@ def fetch_data(
 
 def convert_df(df: DataFrame):
 
-    return df.to_csv(index=False).encode("utf-8")
+    return df.to_csv().encode("utf-8")
 
 
 # %% Body of the web app

@@ -40,7 +40,6 @@ def fetch_data(
     info = stock.info
     return data, info, stock
 
-
 #%% Data conversion function
 
 @st.cache
